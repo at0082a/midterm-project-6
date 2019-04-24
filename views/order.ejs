@@ -1,0 +1,37 @@
+<% include partials/_header %>
+    <div class="shopping-cart">
+        <!-- Title -->
+        <div class="title">
+          Shopping Bag
+        </div>
+       
+        <!-- Product #1 -->
+        <div class="item">
+          <div class="buttons">
+            <span class="delete-btn"><a href="">delete</a></span>
+          </div>
+       
+          <div class="image">
+            <img src="/images/testpizza.jpg" alt="" />
+          </div>
+       
+          <div class="description">
+            <span>Pepperoni</span>
+            <span>large</span>
+          </div>
+       
+          <div class="quantity">
+            <button class="minus-btn" type="button" name="button">
+              <i class="fas fa-minus"></i>
+            </button>
+            <input type="text" name="name" value="1">
+            <button class="plus-btn" type="button" name="button">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+       
+          <div class="total-price">$12.00</div>
+        </div>
+    </div>
+
+<% include partials/_footer %>
