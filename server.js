@@ -36,12 +36,41 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
+// app.use("/api/users", usersRoutes(knex));
+
+// <-------------GET ROUTES------------------>
 
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+// Menu page  
+app.get("/menu", (req, res) => {
+  res.render("index");
+});
+
+//Order page
+app.get("/order", (req, res) => {
+  res.render("index");
+});
+
+//Checkout Page
+app.get("/checkout", (req, res) => {
+  res.render("index");
+})
+
+//Create your own pizza page
+app.get("/menu/create-your-own", (req, res) => {
+  res.render("index");
+});
+
+// <--------POST ROUTES---------->
+
+app.post("/menu", (req, res) => {
+  res.redirect()
+}) 
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
