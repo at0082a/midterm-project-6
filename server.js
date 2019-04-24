@@ -58,7 +58,7 @@ app.get("/order", (req, res) => {
 //Checkout Page
 app.get("/checkout", (req, res) => {
   res.render("checkout");
-})
+});
 
 //Create your own pizza page
 app.get("/menu/create-your-own", (req, res) => {
