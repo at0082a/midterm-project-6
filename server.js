@@ -47,17 +47,17 @@ app.get("/", (req, res) => {
 
 // Menu page  
 app.get("/menu", (req, res) => {
-  res.render("index");
+  res.render("menu");
 });
 
 //Order page
 app.get("/order", (req, res) => {
-  res.render("index");
+  res.render("order");
 });
 
 //Checkout Page
 app.get("/checkout", (req, res) => {
-  res.render("index");
+  res.render("checkout");
 })
 
 //Create your own pizza page
