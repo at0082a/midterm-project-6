@@ -72,7 +72,7 @@ app.post("/menu", (req, res) => {
 });
 
 app.post("/order", (req, res) => {
-  res.redirect("/checkout", templatevars);
+  res.redirect("/checkout");
 });
 
 app.post("/order/:id/delete", (req, res) => {
