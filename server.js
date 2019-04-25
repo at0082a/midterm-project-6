@@ -62,15 +62,23 @@ app.get("/checkout", (req, res) => {
 
 //Create your own pizza page
 app.get("/menu/create-your-own", (req, res) => {
-  res.render("index");
+  res.render("create");
 });
 
 // <--------POST ROUTES---------->
 
 app.post("/menu", (req, res) => {
-  res.redirect()
-}) 
+  res.redirect("/menu");
+});
 
+app.post("/order", (req, res) => {
+  res.redirect("/checkout", templatevars);
+});
+
+app.post("/order/:id/delete", (req, res) => {
+  delete 
+res.redirect("/");    
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
