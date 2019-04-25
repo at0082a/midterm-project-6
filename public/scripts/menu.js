@@ -3,7 +3,6 @@ $(() => {
     method: "GET",
     url: "/api/menu"
   }).done((items) => {
-    console.log(items)
     renderItems(items);
   });;
 });
@@ -34,7 +33,10 @@ function renderItems(inputdata) {
 function createItemElement(data) {
   let itemName        = data.name;
   let price           = data.price;
-  let itemid          = data.id
+  let itemid          = data.id;
+  //let image           = `/images/${data.name}.jpg`;
+  // <img src="${image}">
+  //console.log(image);
   let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}"">
                       <form method="POST" action="/order">
                       <p>${itemName}</p>
