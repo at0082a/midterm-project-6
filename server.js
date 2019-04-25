@@ -35,9 +35,6 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-// Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
-
 // <-------------GET ROUTES------------------>
 
 // Home page
@@ -45,7 +42,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-// Menu page  
+// Menu page
 app.get("/menu", (req, res) => {
   res.render("menu");
 });
@@ -76,9 +73,12 @@ app.post("/order", (req, res) => {
 });
 
 app.post("/order/:id/delete", (req, res) => {
-  delete 
-res.redirect("/");    
+  delete
+res.redirect("/");
 });
+
+// Mount all resource routes
+app.use("/api/menu", usersRoutes(knex));
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
