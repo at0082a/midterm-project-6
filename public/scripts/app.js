@@ -1,13 +1,3 @@
-$(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/menu"
-  }).done((items) => {
-    for(item of items) {
-      $("<div>").text(item.name).appendTo($("body"));
-    }
-  });;
-});
 $(document).ready(function(){
   //find code to increse quntity
   $('.minus-btn').on('click', function(e) {
