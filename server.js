@@ -17,7 +17,6 @@ const cookieParser = require('cookie-parser')
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
-const ordersRoutes = require("./routes/orders")
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -53,7 +52,7 @@ function generateRandomString() {
 
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
-app.use("/api/order", itemsR )
+
 
 // Home page
 app.get("/", (req, res) => {
@@ -87,7 +86,8 @@ res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
-res.redirect("/order");  
+
+res.redirect("/order");
 });
 
 app.post("/order", (req, res) => {
