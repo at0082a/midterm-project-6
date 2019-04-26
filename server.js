@@ -13,10 +13,11 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const cookieParser = require('cookie-parser')
+const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
+const ordersRoutes = require("./routes/orders");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -27,14 +28,20 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
   outputStyle: 'expanded'
 }));
+
 app.use(express.static("public"));
-app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 app.set("view engine", "ejs");
 
 // <---------Functions---------->
@@ -53,6 +60,9 @@ function generateRandomString() {
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
 
+let orderDB = {};// TODO: replace this with a real db
+
+
 
 // Home page
 app.get("/", (req, res) => {
@@ -66,7 +76,9 @@ app.get("/menu", (req, res) => {
 
 //Order page
 app.get("/order", (req, res) => {
-  res.render("order");
+  let userId = req.session.user; // get this from req.session
+  let order = orderDB[userId];
+  res.render("order", { order });
 });
 
 //Checkout Page
@@ -82,12 +94,22 @@ app.get("/menu/create-your-own", (req, res) => {
 // <--------POST ROUTES---------->
 
 app.post("/", (req, res) => {
+  let visitor = generateRandomString()
+  req.session.user = visitor;
 res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
 
 res.redirect("/order");
+});
+
+app.post("/api/order", (req, res) => {
+  res.send("okay");
+  let userId = req.session.user; // get this from req.session
+  // if there isnt an id in req.session yet, set it to a new random string
+  console.log("update order", req.body);
+  orderDB[userId] = req.body;
 });
 
 app.post("/order", (req, res) => {

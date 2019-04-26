@@ -45,13 +45,22 @@ function renderItems(inputdata) {
           orderArray.push(item)
         }
       })
-          console.log("orderArray", orderArray);
+      console.log("orderArray", orderArray);
+      let cartdata = JSON.stringify(orderArray)
+      $.ajax({
+        type: "POST",
+        url: "/api/order",
+        contentType: "application/json",
+        data: cartdata,
+        success: (function() {
+          console.log("Post Successful")
+        })
+      })
     })
 
     $('#shopping-cart').on('click', function(event) {
       event.preventDefault();
-      let cart = JSON.stringify(orderArray)
-      console.log(cart);
+
     })
 
   });
