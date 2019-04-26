@@ -1,14 +1,18 @@
 $(() => {
   $.ajax({
     method: "GET",
-    url: "/api/menu"
+    url: "/api/order"
   }).done((items) => {
     renderItems(items);
   });;
 });
 
 function renderItems(inputdata) {
-  $('#pizza-container').empty();
+  $('#order-container').empty();
+
+
+
+
   for (let item of inputdata) {
     if (item.category_id === 1) {
       var $item = createItemElement(item);
@@ -24,7 +28,7 @@ function renderItems(inputdata) {
       $('#wings-container').append($item);
     } else if (item.category_id === 5) {
       var $item = createItemElement(item);
-      $('#salads-container').append($item);
+      $('#order-container').append($item);
     }
 
   }
@@ -41,52 +45,45 @@ function renderItems(inputdata) {
       let displayID = parseInt($(this).attr("id"));
       inputdata.forEach(function(item) {
         if (displayID === item.id) {
-          //item["newprice"] = item.price * 2;
           orderArray.push(item)
         }
       })
-          console.log("orderArray", orderArray);
     })
-
-    $('#shopping-cart').on('click', function(event) {
-      event.preventDefault();
-      $(() => {
-        $.ajax({
-          method: "POST",
-          url: "/menu",
-          data:JSON.stringify(orderArray)
-          }).done(() => {
-            console.log("Post successfull");
-          });;
-      });
-
-    })
-
   });
 
 };
 
 function createItemElement(data) {
+  let catId           = parseInt(data.category_id);
   let itemName        = data.name;
   let price           = data.price;
-  let itemid          = data.id;
-  //let image           = `/images/${data.name}.jpg`;
-  // <img src="${image}">
-  //console.log(image);
-  let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}">
-                      <p>${itemName}</p>
-                      <p>$${price}</p>
-                      <button class="add-to-cart" id="${itemid}">add</button>
-                      <form method="POST" action="/menu">
-                      </form>
-                      </div>`;
+  let catname         = '';
+  if (catId === 1) {
+    catname = 'Pizza';
+  } else if (catId === 2){
+    catname = 'Burger';
+  } else if (catId === 3){
+    catname = 'Drinks';
+  } else if (catId === 4){
+    catname = 'Wings';
+  } else if (catId === 5){
+    catname = 'Salads';
+  }
+
+  let HTMLToAppend = `<td data-th="Product">
+                      <div class="row">
+                      <div class="col-sm-10">
+                      <p>${catname}-${itemName}Chicken</p>
+                      </div>
+                      </div>
+                      </td>
+                      <td data-th="Price">$${price}</td>
+                      <td data-th="Quantity">
+                      <input type="number" class="form-control text-center" value="1">
+                      </td>
+                      <td data-th="Subtotal" class="text-center">1.99</td>
+                      <td class="actions" data-th="">
+                      <button class="btn btn-danger btn-sm delete-btn"><i class="fas fa-trash-alt"></i></button>
+                      </td>`;
   return HTMLToAppend;
 };
-
-
-
-
-
-
-
-

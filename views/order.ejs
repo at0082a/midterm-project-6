@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <% include partials/_header %>
 <div class="container">
   <table id="cart" class="table table-hover table-condensed">
@@ -11,13 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr id="order-container">
         <td data-th="Product">
           <div class="row">
-            <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive" /></div>
             <div class="col-sm-10">
-              <h4 class="nomargin">Product 1</h4>
-              <p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+              <p>Chicken</p>
             </div>
           </div>
         </td>
@@ -32,9 +32,9 @@
       </tr>
     </tbody>
     <tfoot>
-      <tr class="visible-xs">
+<!--       <tr class="visible-xs">
         <td class="text-center"><strong>Total 1.99</strong></td>
-      </tr>
+      </tr> -->
       <tr>
         <td><a href="/menu" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
         <td colspan="2" class="hidden-xs"></td>
@@ -45,3 +45,4 @@
   </table>
 </div>
 <% include partials/_footer %>
+</html>
