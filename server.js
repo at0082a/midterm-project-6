@@ -17,7 +17,6 @@ const cookieSession = require('cookie-session')
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
-const ordersRoutes = require("./routes/orders")
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -57,7 +56,7 @@ function generateRandomString() {
 
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
-app.use("/api/order", itemsR )
+
 
 // Home page
 app.get("/", (req, res) => {
@@ -93,10 +92,9 @@ res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
-
-  if (req.session.user) {
-    let id = generateRandomString();
-  }
+  // let orderID = generateRandomString();
+  // console.log("orderID", orderID)
+  // console.log("req.body", req.body);
   res.redirect("/order");
 });
 

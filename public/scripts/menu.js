@@ -50,16 +50,8 @@ function renderItems(inputdata) {
 
     $('#shopping-cart').on('click', function(event) {
       event.preventDefault();
-      $(() => {
-        $.ajax({
-          method: "POST",
-          url: "/menu",
-          data:JSON.stringify(orderArray)
-          }).done(() => {
-            console.log("Post successfull");
-          });;
-      });
-
+      let cart = JSON.stringify(orderArray)
+      console.log(cart);
     })
 
   });
