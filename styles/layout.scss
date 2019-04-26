@@ -1,30 +1,134 @@
 body {
   width: 100%;
   height: 100%;
-  background-color: #EEE;
   font-family: 'Roboto', sans-serif;
 
-  h1 {
-    color: #244751;
-  }
+}
+
+
+ .wallpaper{
+  background-image: url("/images/pizzawall.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 600px;
+  position: relative;
+
+}
+.logo{
+  height: 80px;
+  width: 80px;
+  position: relative;
+}
+ #content-b {
+  display: none;
+}
+#content-d{
+  display: none;
+}
+#content-w{
+  display: none;
+}
+#content-s{
+  display: none;
+}
+.cat-name{
+  background-color: #e9ecef;
+  color: #333;
+  border-radius: 10px;
+}
+.item{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 25px;
+  height: 214px;
+}
+.item-name{
+  font-weight: bold;
+  font-size: 31px;
+  padding-top: 26px;
+}
+.price{
+  left: 78%;
+  position: relative;
+  font-size: 24px;
+  top: -22%;
+}
+.size{
+  position: relative;
+  top: -8%;
+}
+.add-to-cart{
+  position: relative;
+  left: 75%;
+  width: 20%;
+  height: 19%;
+  top: -85px;
+}
+select{
+  height: 146%;
+  widows: 21%;;
+}
+label{
+  font-size: x-large;
+}
+
+.wallpaper .carousel-caption{
+  padding-bottom: 211px;
+}
+
+.margin-top{
+  margin-top: 4%;
 }
 
 .about{
-  margin-top: 13%
+  margin-top: 6%;
+  min-height: 625px;
+
 }
 
 footer{
-  background-color: #EEE;
+  background-color: #333;
+  color: azure;
 
 }
-
+.margin-more{
+  margin-top: 7%;
+}
 // *{
 //   border: 1px solid black;
 // }
 
 
+#mainNavbar{
+  font-size: 1.5rem;
+  font-weight: 100;
+  background-color: #333;
+}
+#mainNavbar .nav-link{
+  color: white;
+}
 
-img{
+#mainNavbar .nav-link:hover{
+  color:#EA1C2C ;
+}
+
+#mainNavbar .navbar-brand{
+  color: #EA1C2C;
+
+}
+#headingGroup span{
+  color: #EA1C2C;
+}
+
+#headingGroup h1{
+  font-weight: 100;
+  font-size: 4rem;
+}
+
+img .logo{
   width: 80px;
   height: 80px;
   display: block;
@@ -32,7 +136,26 @@ img{
   margin-right: 50px;
 
 }
-
+.item-counter{
+  position: relative;
+  top: -31px;
+  right: 19px;
+  color: azure;
+  background-color: red;
+  padding: 0px 6px;
+  border-radius: 100px;
+}
+.shopping-cart{
+  position: relative;
+  left: 399%;
+  bottom: -2px;
+}
+.fa-2x{
+  font-size: 37px;
+}
+.cart{
+  color: azure;
+}
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
   vertical-align: middle;
@@ -78,3 +201,4 @@ img{
     display: block;
   }
 }
+
