@@ -28,6 +28,25 @@ function renderItems(inputdata) {
     }
 
   }
+  $(document).ready(function() {
+
+//This code creates an array of object when an item is added
+
+    let itemCount = 0;
+    let orderArray = [];
+    $('.add-to-cart').on('click', function(event) {
+      event.preventDefault();
+      itemCount++
+      $('.item-counter').text(itemCount);
+      let displayID = parseInt($(this).attr("id"));
+      inputdata.forEach(function(item) {
+        if (displayID === item.id) {
+          orderArray.push(item)
+        }
+      })
+    })
+  });
+
 };
 
 function createItemElement(data) {
@@ -37,11 +56,11 @@ function createItemElement(data) {
   //let image           = `/images/${data.name}.jpg`;
   // <img src="${image}">
   //console.log(image);
-  let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}"">
-                      <form method="POST" action="/order">
+  let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}">
                       <p>${itemName}</p>
                       <p>$${price}</p>
-                      <button class="add-to-cart">add</button>
+                      <button class="add-to-cart" id="${itemid}">add</button>
+                      <form method="POST" action="/menu">
                       </form>
                       </div>`;
   return HTMLToAppend;

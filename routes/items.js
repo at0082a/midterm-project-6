@@ -9,6 +9,7 @@ module.exports = (knex) => {
     knex
       .select("*")
       .from("items")
+      .orderBy("id")
       .then((results) => {
         res.json(results);
     });
