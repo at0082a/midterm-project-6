@@ -13,7 +13,7 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
-const cookieSession = require('cookie-session')
+const cookieParser = require('cookie-parser')
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
@@ -35,11 +35,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  maxAge: 24 * 60 * 60 * 1000 // 24 hours
-}));
+app.use(cookieParser());
 app.set("view engine", "ejs");
 
 // <---------Functions---------->
@@ -87,17 +83,11 @@ app.get("/menu/create-your-own", (req, res) => {
 // <--------POST ROUTES---------->
 
 app.post("/", (req, res) => {
-  let cookie = generateRandomString();
-  req.session.user = cookie;
 res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
-
-  if (req.session.user) {
-    let id = generateRandomString();
-  }
-  res.redirect("/order");
+res.redirect("/order");  
 });
 
 app.post("/order", (req, res) => {
