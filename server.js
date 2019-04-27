@@ -17,6 +17,7 @@ const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
+const ordersitemsRoutes = require("./routes/orders-items");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -58,6 +59,7 @@ function generateRandomString() {
 
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
+app.use("/api/order", ordersitemsRoutes(knex));
 
 let orderDB = {};// TODO: replace this with a real db
 
@@ -105,11 +107,45 @@ res.redirect("/order");
 
 app.post("/api/order", (req, res) => {
 
-  let userId = req.session.user; // get this from req.session
-  // if there isnt an id in req.session yet, set it to a new random string
+  let userId = req.session.user;
+  const knex = require('knex')({
+    client: 'pg',
+    version: '7.2',
+    connection: {
+    host : 'localhost',
+    user : 'labber',
+    password : 'labber',
+    database : 'midterm',
+    }
+  });
 
   orderDB[userId] = req.body;
-  console.log("Order DB is: ", orderDB)
+
+  let catId   = parseInt(orderDB[userId].category_id);
+  let catname = '';
+
+  if (catId === 1) {
+    catname = 'Pizza';
+  } else if (catId === 2){
+    catname = 'Burger';
+  } else if (catId === 3){
+    catname = 'Drinks';
+  } else if (catId === 4){
+    catname = 'Wings';
+  } else if (catId === 5){
+    catname = 'Salads';
+  }
+
+  let insertValues = [
+    { order_id: userId, category_name: catname, item_name: orderDB[userId].name,real_price: parseFloat(orderDB[userId].newprice)}
+  ]
+
+  knex('orders_items').insert(insertValues)
+    .then(() => console.log("data inserted"))
+    .catch((err) => { console.log(err); throw err })
+    .finally(() => {
+        knex.destroy();
+    });
 
   res.send("okay");
 
