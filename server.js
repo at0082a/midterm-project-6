@@ -15,9 +15,15 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const cookieSession = require('cookie-session');
 
+const accountSid = "ACdc5ae278702f06aebef290c4ab632c45";
+const authToken = "5b1d1564ef998c0698715689e812c96f";
+const twilio = require('twilio');
+const client = new twilio(accountSid, authToken);
+
+
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
-
+const ordersitemsRoutes = require("./routes/orders-items");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -59,9 +65,10 @@ function generateRandomString() {
 
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
+app.use("/api/order", ordersitemsRoutes(knex));
 
 let orderDB = {};// TODO: replace this with a real db
-
+let deleteDB = {};
 
 
 // Home page
@@ -82,6 +89,7 @@ app.get("/order", (req, res) => {
 });
 
 //Checkout Page
+
 app.get("/checkout", (req, res) => {
   res.render("checkout");
 })
@@ -105,25 +113,103 @@ res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
-
-res.redirect("/order");
+ res.redirect("/order");
 });
 
 app.post("/api/order", (req, res) => {
-  res.send("okay");
-  let userId = req.session.user; // get this from req.session
-  // if there isnt an id in req.session yet, set it to a new random string
-  console.log("update order", req.body);
+
+  let userId = req.session.user;
+  const knex = require('knex')({
+    client: 'pg',
+    version: '7.2',
+    connection: {
+    host : 'localhost',
+    user : 'labber',
+    password : 'labber',
+    database : 'midterm',
+    }
+  });
+
   orderDB[userId] = req.body;
+
+  let catId   = parseInt(orderDB[userId].category_id);
+  let itemId  = parseInt(orderDB[userId].id);
+  let catname = '';
+
+  if (catId === 1) {
+    catname = 'Pizza';
+  } else if (catId === 2){
+    catname = 'Burger';
+  } else if (catId === 3){
+    catname = 'Drinks';
+  } else if (catId === 4){
+    catname = 'Wings';
+  } else if (catId === 5){
+    catname = 'Salads';
+  }
+
+  let insertValues = [
+    { order_id: userId, item_id: itemId, category_name: catname, item_name: orderDB[userId].name,real_price: parseFloat(orderDB[userId].newprice)}
+  ]
+
+  knex('orders_items').insert(insertValues)
+    .then(() => console.log("data inserted"))
+    .catch((err) => { console.log(err); throw err })
+    .finally(() => {
+        knex.destroy();
+    });
+
+  res.send("okay");
+
 });
 
-app.post("/order", (req, res) => {
-  res.redirect("/checkout");
-});
+app.post("/checkout", (req, res) => {
 
-app.post("/order/:id/delete", (req, res) => {
-  delete
-res.redirect("/");
+  client.messages.create({
+    body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
+    from: '+16477996681',
+    to: '+16473826761',
+    statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
+  })
+               .then(message => console.log("This is message from checkout: " + message));
+  // res.render("checkout");
+})
+
+// app.post("/order", (req, res) => {
+//   res.redirect("/checkout");
+// });
+
+app.post("/order/delete", (req, res) => {
+
+  let userId = req.session.user;
+
+  const knex = require('knex')({
+    client: 'pg',
+    version: '7.2',
+    connection: {
+    host : 'localhost',
+    user : 'labber',
+    password : 'labber',
+    database : 'midterm',
+    }
+  });
+
+  deleteDB[userId] = req.body;
+
+  let orderId   = parseInt(deleteDB[userId].order_id);
+  let itemId  = parseInt(deleteDB[userId].item_id);
+
+
+  knex('orders_items')
+    .where({ order_id: orderId, item_id: itemId })
+    .delete()
+    .then(() => console.log("item deleted"))
+    .catch((err) => { console.log(err); throw err })
+    .finally(() => {
+        knex.destroy();
+    });
+  console.log("Delete from db success")
+  res.redirect("/order");
 });
 
 
