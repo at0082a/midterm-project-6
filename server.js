@@ -14,12 +14,15 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const cookieSession = require('cookie-session');
+<<<<<<< HEAD
 
 const accountSid = "ACdc5ae278702f06aebef290c4ab632c45";
 const authToken = "5b1d1564ef998c0698715689e812c96f";
 const twilio = require('twilio');
 const client = new twilio(accountSid, authToken);
 
+=======
+>>>>>>> c8f21e12582ab62eba38747222a2200b02bdfc61
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
@@ -33,6 +36,7 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -40,6 +44,7 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 
+<<<<<<< HEAD
 app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
@@ -47,6 +52,14 @@ app.use(cookieSession({
 }));
 
 app.use(express.static("public"));
+=======
+app.use(express.static("public"));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+>>>>>>> c8f21e12582ab62eba38747222a2200b02bdfc61
 app.set("view engine", "ejs");
 
 // <---------Functions---------->
@@ -64,7 +77,14 @@ function generateRandomString() {
 
 // Mount all resource routes
 app.use("/api/menu", itemsRoutes(knex));
+<<<<<<< HEAD
 // app.use("/api/order", itemsR )
+=======
+
+let orderDB = {};// TODO: replace this with a real db
+
+
+>>>>>>> c8f21e12582ab62eba38747222a2200b02bdfc61
 
 // Home page
 app.get("/", (req, res) => {
@@ -78,7 +98,9 @@ app.get("/menu", (req, res) => {
 
 //Order page
 app.get("/order", (req, res) => {
-  res.render("order");
+  let userId = req.session.user; // get this from req.session
+  let order = orderDB[userId];
+  res.render("order", { order });
 });
 
 //Checkout Page
@@ -100,7 +122,20 @@ res.redirect("/menu");
 });
 
 app.post("/menu", (req, res) => {
-res.redirect("/order");  
+
+res.redirect("/order");
+});
+
+app.post("/api/order", (req, res) => {
+
+  let userId = req.session.user; // get this from req.session
+  // if there isnt an id in req.session yet, set it to a new random string
+
+  orderDB[userId] = req.body;
+  console.log("Order DB is: ", orderDB)
+
+  res.send("okay");
+
 });
 
 app.post("/order", (req, res) => {
