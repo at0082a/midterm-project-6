@@ -90,7 +90,11 @@ app.get("/order", (req, res) => {
 
 app.get("/checkout", (req, res) => {
   res.render("checkout");
-});
+})
+
+app.get("/confirmation", (req, res) => {
+  res.render("confirmation");
+})
 
 //Create your own pizza page
 app.get("/menu/create-your-own", (req, res) => {
@@ -120,6 +124,18 @@ app.post("/api/order", (req, res) => {
   res.send("okay");
 
 });
+
+app.post("/checkout", (req, res) => {
+
+  client.messages.create({
+    body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
+    from: '+16477996681',
+    to: '+16473826761',
+    statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
+  })
+               .then(message => console.log("This is message from checkout: " + message));
+  // res.render("checkout");
+})
 
 app.post("/order", (req, res) => {
   res.redirect("/checkout");
