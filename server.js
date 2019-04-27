@@ -17,7 +17,6 @@ const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
-const ordersRoutes = require("./routes/orders");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -105,11 +104,15 @@ res.redirect("/order");
 });
 
 app.post("/api/order", (req, res) => {
-  res.send("okay");
+
   let userId = req.session.user; // get this from req.session
   // if there isnt an id in req.session yet, set it to a new random string
-  console.log("update order", req.body);
+
   orderDB[userId] = req.body;
+  console.log("Order DB is: ", orderDB)
+
+  res.send("okay");
+
 });
 
 app.post("/order", (req, res) => {

@@ -31,7 +31,6 @@
    }
    $(document).ready(function() {
 
-<<<<<<< HEAD
 //This code creates an array of object when an item is added
 
     let itemCount = 0;
@@ -43,28 +42,46 @@
       let displayID = parseInt($(this).attr("id"));
       inputdata.forEach(function(item) {
         if (displayID === item.id) {
-          //item["newprice"] = item.price * 2;
-          orderArray.push(item)
+          item["newprice"] = item.price * 2;
+          // orderArray.push(item)
+          let cartdata = JSON.stringify(item)
+          $.ajax({
+            type: "POST",
+            url: "/api/order",
+            contentType: "application/json",
+            data: cartdata,
+            success: (function() {
+              console.log("Post Successful")
+            })
+          })
         }
       })
-      console.log("orderArray", orderArray);
-      let cartdata = JSON.stringify(orderArray)
-      $.ajax({
-        type: "POST",
-        url: "/api/order",
-        contentType: "application/json",
-        data: cartdata,
-        success: (function() {
-          console.log("Post Successful")
-        })
-      })
+      // let cartdata = JSON.stringify(orderArray)
+      // $.ajax({
+      //   type: "POST",
+      //   url: "/api/order",
+      //   contentType: "application/json",
+      //   data: cartdata,
+      //   success: (function() {
+      //     console.log("Post Successful")
+      //   })
+      // })
     })
-
-    $('#shopping-cart').on('click', function(event) {
-      event.preventDefault();
-
-    })
-
+    $( ".cat-p" ).click(function() {
+      $( "#content-p" ).slideToggle( "slow" );
+    });
+    $( ".cat-b" ).click(function() {
+      $( "#content-b" ).slideToggle( "slow" );
+    });
+    $( ".cat-w" ).click(function() {
+      $( "#content-w" ).slideToggle( "slow" );
+    });
+    $( ".cat-d" ).click(function() {
+      $( "#content-d" ).slideToggle( "slow" );
+    });
+    $( ".cat-s" ).click(function() {
+      $( "#content-s" ).slideToggle( "slow" );
+    });
   });
 
 };
@@ -76,79 +93,23 @@ function createItemElement(data) {
   //let image           = `/images/${data.name}.jpg`;
   // <img src="${image}">
   //console.log(image);
-  let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}">
-                      <p>${itemName}</p>
-                      <p>$${price}</p>
-                      <button class="add-to-cart" id="${itemid}">add</button>
+  let HTMLToAppend = `<div class="col-md-6 item ${itemName}-${itemid}">
+                      <p class="item-name">${itemName}</p>
+                      <p class="price">$${price}</p>
+                      <div class="size form-group">
+                      <label for="sel1">Select size:</label>
+                      <select id ="Select1" class="input-large">
+                      <option>small</option>
+                      <option>medium</option>
+                      <option>large</option>
+                      </select>
+                      </div>
+                      <button class="add-to-cart btn btn-outline-info btn-lg" id="${itemid}"><i class="fas fa-cart-plus"></i> Add</button>
                       <form method="POST" action="/menu">
                       </form>
                       </div>`;
-  return HTMLToAppend;
+return HTMLToAppend;
 };
-=======
- //This code creates an array of object when an item is added
->>>>>>> pizza-animation
-
-     let itemCount = 0;
-     let orderArray = [];
-     $('.add-to-cart').on('click', function(event) {
-       event.preventDefault();
-       itemCount++
-       $('.item-counter').text(itemCount);
-       let displayID = parseInt($(this).attr("id"));
-       inputdata.forEach(function(item) {
-         if (displayID === item.id) {
-           orderArray.push(item)
-         }
-       })
-     })
-   });
-
- };
-
- function createItemElement(data) {
-   let itemName        = data.name;
-   let price           = data.price;
-   let itemid          = data.id;
-   //let image           = `/images/${data.name}.jpg`;
-   // <img src="${image}">
-   //console.log(image);
-   let HTMLToAppend = `<div class="col-md-6 item ${itemName}-${itemid}">
-                       <p class="item-name">${itemName}</p>
-                       <p class="price">$${price}</p>
-                       <div class="size form-group">
-                       <label for="sel1">Select size:</label>
-                       <select id ="Select1" class="input-large">
-                           <option>small</option>
-                           <option>medium</option>
-                           <option>large</option>
-                       </select>
-                       </div>
-                       <button class="add-to-cart btn btn-outline-info btn-lg" id="${itemid}"><i class="fas fa-cart-plus"></i> Add</button>
-                       <form method="POST" action="/menu">
-                       </form>
-                       </div>`;
-   return HTMLToAppend;
- };
-
-$(document).ready(function() {
-  $( ".cat-p" ).click(function() { 
-    $( "#content-p" ).slideToggle( "slow" );
-  });
-  $( ".cat-b" ).click(function() { 
-    $( "#content-b" ).slideToggle( "slow" );
-  });
-  $( ".cat-w" ).click(function() { 
-    $( "#content-w" ).slideToggle( "slow" );
-  });
-  $( ".cat-d" ).click(function() { 
-    $( "#content-d" ).slideToggle( "slow" );
-  });
-  $( ".cat-s" ).click(function() { 
-    $( "#content-s" ).slideToggle( "slow" );
-  });
-})
-
 
 
 
