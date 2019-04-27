@@ -8,7 +8,7 @@
  });
 
  function renderItems(inputdata) {
-   console.log(inputdata);
+   // console.log(inputdata);
    $('#pizza-container').empty();
    for (let item of inputdata) {
      if (item.category_id === 1) {

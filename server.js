@@ -68,7 +68,7 @@ app.use("/api/menu", itemsRoutes(knex));
 app.use("/api/order", ordersitemsRoutes(knex));
 
 let orderDB = {};// TODO: replace this with a real db
-
+let deleteDB = {};
 
 
 // Home page
@@ -94,9 +94,11 @@ app.get("/checkout", (req, res) => {
   res.render("checkout");
 })
 
+
 app.get("/confirmation", (req, res) => {
   res.render("confirmation");
 })
+
 
 //Create your own pizza page
 app.get("/menu/create-your-own", (req, res) => {
@@ -132,6 +134,7 @@ app.post("/api/order", (req, res) => {
   orderDB[userId] = req.body;
 
   let catId   = parseInt(orderDB[userId].category_id);
+  let itemId  = parseInt(orderDB[userId].id);
   let catname = '';
 
   if (catId === 1) {
@@ -147,7 +150,7 @@ app.post("/api/order", (req, res) => {
   }
 
   let insertValues = [
-    { order_id: userId, category_name: catname, item_name: orderDB[userId].name,real_price: parseFloat(orderDB[userId].newprice)}
+    { order_id: userId, item_id: itemId, category_name: catname, item_name: orderDB[userId].name,real_price: parseFloat(orderDB[userId].newprice)}
   ]
 
   knex('orders_items').insert(insertValues)
@@ -173,13 +176,41 @@ app.post("/checkout", (req, res) => {
   // res.render("checkout");
 })
 
-app.post("/order", (req, res) => {
-  res.redirect("/checkout");
-});
+// app.post("/order", (req, res) => {
+//   res.redirect("/checkout");
+// });
 
-app.post("/order/:id/delete", (req, res) => {
-  delete
-res.redirect("/");
+app.post("/order/delete", (req, res) => {
+
+  let userId = req.session.user;
+
+  const knex = require('knex')({
+    client: 'pg',
+    version: '7.2',
+    connection: {
+    host : 'localhost',
+    user : 'labber',
+    password : 'labber',
+    database : 'midterm',
+    }
+  });
+
+  deleteDB[userId] = req.body;
+
+  let orderId   = parseInt(deleteDB[userId].order_id);
+  let itemId  = parseInt(deleteDB[userId].item_id);
+
+
+  knex('orders_items')
+    .where({ order_id: orderId, item_id: itemId })
+    .delete()
+    .then(() => console.log("item deleted"))
+    .catch((err) => { console.log(err); throw err })
+    .finally(() => {
+        knex.destroy();
+    });
+  console.log("Delete from db success")
+  res.redirect("/order");
 });
 
 

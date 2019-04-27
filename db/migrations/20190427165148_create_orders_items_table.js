@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('orders_items', function(table){
     table.increments('id');
     table.integer('order_id')
+    table.integer('item_id')
     table.string('category_name');
     table.string('item_name');
     table.float('real_price')
