@@ -17,7 +17,7 @@ const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const itemsRoutes = require("./routes/items");
-const ordersRoutes = require("./routes/orders");
+
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -84,6 +84,11 @@ app.get("/order", (req, res) => {
 //Checkout Page
 app.get("/checkout", (req, res) => {
   res.render("checkout");
+})
+
+//Confirmation page
+app.get("/confirm", (req, res) => {
+  res.render("confirm");
 })
 
 //Create your own pizza page

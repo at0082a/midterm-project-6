@@ -12,7 +12,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  min-height: 600px;
+  min-height: 675px;
   position: relative;
 
 }
@@ -74,12 +74,12 @@ select{
 label{
   font-size: x-large;
 }
-
 .wallpaper .carousel-caption{
   padding-bottom: 211px;
 }
 
 .margin-top{
+  min-height: 675px;
   margin-top: 4%;
 }
 
@@ -88,7 +88,11 @@ label{
   min-height: 625px;
 
 }
+.billing{
+  font-size:30px;
+  font-weight: bold;
 
+}
 footer{
   background-color: #333;
   color: azure;
@@ -101,7 +105,22 @@ footer{
 //   border: 1px solid black;
 // }
 
+.article{
+  top: 120px;
+  position: relative;
+  border: 2px solid #e9ecef;
+  width: 39%;
+  left: 29%;
 
+}
+.header{
+  padding-top: 18px;
+  background-color: #e9ecef;
+  font-style: oblique;
+}
+.content{
+  padding: 32px;
+}
 #mainNavbar{
   font-size: 1.5rem;
   font-weight: 100;
@@ -136,7 +155,7 @@ img .logo{
   margin-right: 50px;
 
 }
-.item-counter{
+.count-number{
   position: relative;
   top: -31px;
   right: 19px;
@@ -161,6 +180,9 @@ img .logo{
   vertical-align: middle;
 }
 
+.menu{
+  margin-top: 13%;
+}
 @media screen and (max-width: 600px) {
   table#cart tbody td .form-control {
     width: 20%;

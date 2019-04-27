@@ -31,63 +31,7 @@
    }
    $(document).ready(function() {
 
-<<<<<<< HEAD
-//This code creates an array of object when an item is added
-
-    let itemCount = 0;
-    let orderArray = [];
-    $('.add-to-cart').on('click', function(event) {
-      event.preventDefault();
-      itemCount++
-      $('.item-counter').text(itemCount);
-      let displayID = parseInt($(this).attr("id"));
-      inputdata.forEach(function(item) {
-        if (displayID === item.id) {
-          //item["newprice"] = item.price * 2;
-          orderArray.push(item)
-        }
-      })
-      console.log("orderArray", orderArray);
-      let cartdata = JSON.stringify(orderArray)
-      $.ajax({
-        type: "POST",
-        url: "/api/order",
-        contentType: "application/json",
-        data: cartdata,
-        success: (function() {
-          console.log("Post Successful")
-        })
-      })
-    })
-
-    $('#shopping-cart').on('click', function(event) {
-      event.preventDefault();
-
-    })
-
-  });
-
-};
-
-function createItemElement(data) {
-  let itemName        = data.name;
-  let price           = data.price;
-  let itemid          = data.id;
-  //let image           = `/images/${data.name}.jpg`;
-  // <img src="${image}">
-  //console.log(image);
-  let HTMLToAppend = `<div class="col-md-6 class="${itemName}-${itemid}">
-                      <p>${itemName}</p>
-                      <p>$${price}</p>
-                      <button class="add-to-cart" id="${itemid}">add</button>
-                      <form method="POST" action="/menu">
-                      </form>
-                      </div>`;
-  return HTMLToAppend;
-};
-=======
  //This code creates an array of object when an item is added
->>>>>>> pizza-animation
 
      let itemCount = 0;
      let orderArray = [];
@@ -104,6 +48,8 @@ function createItemElement(data) {
      })
    });
 
+
+
  };
 
  function createItemElement(data) {
@@ -113,7 +59,7 @@ function createItemElement(data) {
    //let image           = `/images/${data.name}.jpg`;
    // <img src="${image}">
    //console.log(image);
-   let HTMLToAppend = `<div class="col-md-6 item ${itemName}-${itemid}">
+   let HTMLToAppend = `<div class=" col-lg-6 item ${itemName}-${itemid}">
                        <p class="item-name">${itemName}</p>
                        <p class="price">$${price}</p>
                        <div class="size form-group">
