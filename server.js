@@ -96,6 +96,7 @@ app.get("/checkout", (req, res) => {
 
 //Confirmation page
 app.get("/confirm", (req, res) => {
+  req.session = null;
   res.render("confirm");
 })
 
@@ -163,17 +164,17 @@ app.post("/api/order", (req, res) => {
 
 });
 
-app.post("/checkout", (req, res) => {
+// app.post("/checkout", (req, res) => {
 
-  client.messages.create({
-    body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
-    from: '+16477996681',
-    to: '+16473826761',
-    statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
-  })
-               .then(message => console.log("This is message from checkout: " + message));
-  // res.render("checkout");
-})
+//   client.messages.create({
+//     body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
+//     from: '+16477996681',
+//     to: '+16473826761',
+//     statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
+//   })
+//                .then(message => console.log("This is message from checkout: " + message));
+//   // res.render("checkout");
+// })
 
 // app.post("/order", (req, res) => {
 //   res.redirect("/checkout");
