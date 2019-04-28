@@ -197,12 +197,12 @@ app.post("/order/delete", (req, res) => {
 
   deleteDB[userId] = req.body;
 
+  let ordersItemsId = parseInt(deleteDB[userId].id);
   let orderId   = parseInt(deleteDB[userId].order_id);
   let itemId  = parseInt(deleteDB[userId].item_id);
 
-
   knex('orders_items')
-    .where({ order_id: orderId, item_id: itemId })
+    .where({ order_id: orderId, item_id: itemId, id: ordersItemsId })
     .delete()
     .then(() => console.log("item deleted"))
     .catch((err) => { console.log(err); throw err })

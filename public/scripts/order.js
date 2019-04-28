@@ -26,7 +26,7 @@ function renderItems(inputdata) {
       event.preventDefault();
       let displayID = parseInt($(this).attr("id"));
       inputdata.forEach(function(item) {
-        if (displayID === item.item_id) {
+        if (displayID === item.id) {
           let cartdata = JSON.stringify(item)
           console.log('cartdata', cartdata)
           $.ajax({
@@ -48,8 +48,9 @@ function renderItems(inputdata) {
 function createItemElement(data) {
   let categoryName    = data.category_name;
   let itemName        = data.item_name;
-  let price           = data.real_price
-  let itemId          = data.item_id
+  let price           = data.real_price;
+  let itemId          = data.item_id;
+  let deleteId        = data.id;
 
   let HTMLToAppend = `<tr>
                       <td data-th="Product">
@@ -65,7 +66,7 @@ function createItemElement(data) {
                       </td>
                       <td class="actions" data-th="">
                       <form method="POST" action="/order/delete">
-                        <button id="${itemId}" type="submit" class="btn btn-danger btn-sm delete-btn delete-button"><i class="fas fa-trash-alt"></i></button>
+                        <button id="${deleteId}" type="submit" class="btn btn-danger btn-sm delete-btn delete-button"><i class="fas fa-trash-alt"></i></button>
                       </form>
                       </td>
                       </tr>`;
