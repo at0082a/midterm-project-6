@@ -18,10 +18,16 @@ function renderItems(inputdata) {
     var $item = createItemElement(item);
     $('#product-container').append($item);
   }
+
+  // let finalTotal = total.toFixed(2);
   let finalTotal = total.toFixed(2);
+  let hst        = finalTotal * 0.13;
+  let finalhst   = hst.toFixed(2);
+  let checkoutValue = parseFloat(finalTotal) + parseFloat(finalhst);
+  let finalCheckoutValue = checkoutValue.toFixed(2);
   let $totalToAppend = `<li class="list-group-item d-flex justify-content-between">
-                       <span>Total</span>
-                       <p id="cart-total"><strong>$${finalTotal}</strong></p>
+                       <span>Total + HST</span>
+                       <p id="cart-total"><strong>$${finalCheckoutValue}</strong></p>
                        </li>`;
 
   $('#product-container').append($totalToAppend);

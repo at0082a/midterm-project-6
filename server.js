@@ -16,9 +16,9 @@ const knexLogger  = require('knex-logger');
 const cookieSession = require('cookie-session');
 
 const accountSid = "ACdc5ae278702f06aebef290c4ab632c45";
-const authToken = "5b1d1564ef998c0698715689e812c96f";
-const twilio = require('twilio');
-const client = new twilio(accountSid, authToken);
+const authToken  = "5b1d1564ef998c0698715689e812c96f";
+const twilio     = require('twilio');
+const client     = new twilio(accountSid, authToken);
 
 
 // Seperated Routes for each Resource
@@ -96,6 +96,13 @@ app.get("/checkout", (req, res) => {
 
 //Confirmation page
 app.get("/confirm", (req, res) => {
+  client.messages.create({
+    body: 'You received a new order Please check the app for order details.',
+    from: '+16477996681',
+    to: '+16473826761',
+    statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
+  })
+    .then(message => console.log("This is message from confirm: " + message));
   req.session = null;
   res.render("confirm");
 })
@@ -164,21 +171,20 @@ app.post("/api/order", (req, res) => {
 
 });
 
-// app.post("/checkout", (req, res) => {
+app.post("/checkout", (req, res) => {
+  client.messages.create({
+    body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
+    from: '+16477996681',
+    to: '+16473826761',
+    statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
+  })
+               .then(message => console.log("This is message from checkout: " + message));
+  res.redirect("/confirm");
+})
 
-//   client.messages.create({
-//     body: 'Thank you for your purchase. It will take 30 minutes for the order to be ready.',
-//     from: '+16477996681',
-//     to: '+16473826761',
-//     statusCallback: 'https://fc89f917.ngrok.io/smsstatus'
-//   })
-//                .then(message => console.log("This is message from checkout: " + message));
-//   // res.render("checkout");
-// })
-
-// app.post("/order", (req, res) => {
-//   res.redirect("/checkout");
-// });
+app.post("/order", (req, res) => {
+  res.redirect("/checkout");
+});
 
 app.post("/order/delete", (req, res) => {
 
@@ -209,7 +215,6 @@ app.post("/order/delete", (req, res) => {
     .finally(() => {
         knex.destroy();
     });
-  console.log("Delete from db success")
   res.redirect("/order");
 });
 

@@ -96,7 +96,6 @@ function createItemElement(data) {
   let itemid          = data.id;
   let HTMLToAppend = `<div class="col-lg-6 item ${itemName}-${itemid}">
                       <p class="item-name">${itemName}</p>
-                      <p class="price">$${price}</p>
                       <div class="size form-group">
                       <label for="sel1">Select size:</label>
                       <select class ="Select1" class="input-large">
