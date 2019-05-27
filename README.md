@@ -1,4 +1,4 @@
-# Food Now - Food Order Pick-up WebApp
+# Pizza Uto - Food Ordering WebApp
 
 Pizza Uto is a web application for a single restaurant wher a user can order food for pick-up. Users can view the menu and select a pizza or beverage with an option to select a size of small, medium or large. The user can view all items in a cart and proceed to a check out page.
 
