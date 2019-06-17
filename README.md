@@ -31,6 +31,6 @@ The web app uses Twilio API to communicate with the restaurant (SMS text) about 
 - Now you should have the most up to date db
 
 ## Team Members
-- Soumya
+- Soumyashree
 - Alex
 - Fiona
